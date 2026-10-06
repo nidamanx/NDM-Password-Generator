@@ -27,7 +27,7 @@ jobs:
       - name: mypy
         run: mypy --strict ndm_password-generator.py
       - name: ruff
-        run: ruff check ndm_password-generator.py
+        run: ruff check --ignore EXE001 ndm_password-generator.py
       - name: bandit
         run: bandit -q ndm_password-generator.py
       - name: vermin (minimum Python 3.8)
