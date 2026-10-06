@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install linters
+        run: pip install pycodestyle flake8 pylint mypy ruff bandit vermin
+      - name: pycodestyle
+        run: pycodestyle --max-line-length=79 ndm_password-generator.py
+      - name: flake8
+        run: flake8 --max-complexity=10 ndm_password-generator.py
+      - name: pylint
+        run: pylint ndm_password-generator.py
+      - name: mypy
+        run: mypy --strict ndm_password-generator.py
+      - name: ruff
+        run: ruff check ndm_password-generator.py
+      - name: bandit
+        run: bandit -q ndm_password-generator.py
+      - name: vermin (minimum Python 3.8)
+        run: vermin --target=3.8- --violations ndm_password-generator.py
+
+  smoke:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Default run
+        run: python ndm_password-generator.py
+      - name: Quiet mode prints exactly one 16-char password
+        run: |
+          out="$(python ndm_password-generator.py -q)"
+          test "${#out}" -eq 16
+      - name: Level, symbols and prefix
+        run: python ndm_password-generator.py -l excellent -y 2 -p AB -v
