@@ -1,0 +1,61 @@
+# Personal workflow notes
+README_DEV.md
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Tool caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# Editors: VS Code / VSCodium
+.vscode/
+
+# Editors: Vim / Neovim
+*.swp
+*.swo
+Session.vim
+.netrwhist
+
+# Editors: Emacs
+\#*\#
+.\#*
+*.elc
+
+# Editors: Kate
+*.kate-swp
+
+# Editors: nano (backups *~ and lock files *.swp are covered elsewhere)
+*.save
+
+# Editors: Geany (project files)
+*.geany
+
+# Editors: Eclipse / PyDev
+.project
+.pydevproject
+.settings/
+.metadata/
+
+# Editors: Spyder
+.spyderproject
+.spyproject/
+
+# Editors: Zed
+.zed/
+
+# Editors: JetBrains (PyCharm Community)
+.idea/
+
+# Generic editor backups
+*~
+
+# OS
+.DS_Store
+Thumbs.db
